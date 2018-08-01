@@ -19,9 +19,8 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * 代码生成器
- * @author R & D
- * @email 908350381@qq.com
- * @date 2016年12月19日 下午9:12:58
+ * @author Zhoufan
+ * @date 2018年07月19日 下午9:12:58
  */
 @Controller
 @RequestMapping("/sys/generator")

@@ -10,9 +10,9 @@ import org.springframework.format.Formatter;
 /**
  * springmvc默认只接收String类型，日期类型的需要自定义转换器
  * <p>Description: springmvc日期转换器</p>
- * <p>Company: 汉德网络有限公司</p>
- * @author Chenboliang
- * @date 2016年2月19日 下午1:30:27
+ * 
+ * @author Zhoufan
+ * @date 2018年06月19日 下午1:30:27
  */
 public class DateFormatter implements Formatter<Date>{
 

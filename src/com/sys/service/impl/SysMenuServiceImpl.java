@@ -69,7 +69,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuDTO, String> impl
 			}
 			subMenuList.add(menu);
 		}
-		System.out.println(">>>subMenuList:" + JSON.toJSONString(subMenuList));
+		
 		return subMenuList;
 	}
 

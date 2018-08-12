@@ -45,7 +45,8 @@ public class UserRealm extends AuthorizingRealm{
          * 3.LDAP UUID或静态DN 
          * 4.在所有用户帐户中唯一的字符串用户名
 		 */
-		SysUserDTO user = (SysUserDTO) principals.getPrimaryPrincipal();
+		String userName = (String) principals.getPrimaryPrincipal();
+		SysUserDTO user = sysUserService.queryByUserName(userName);
 		int userId = user.getUserId();
 		
 		List<String> permsList = null;

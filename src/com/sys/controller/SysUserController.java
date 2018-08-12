@@ -1,16 +1,20 @@
 package com.sys.controller;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.base.controller.BaseController;
 
 import com.sys.dto.SysUserDTO;
 import com.sys.service.SysUserService;
+import com.util.PageUtil;
 import com.util.ShiroUtils;
 
 /**
@@ -61,4 +65,18 @@ public class SysUserController extends BaseController{
 		ShiroUtils.logout();
 		return putData();
 	}
+	
+	//用户列表
+	@RequestMapping("/list")
+	@RequiresPermissions("sys:user:list")
+	public Object getUserList(int page, int limit) {
+		List<SysUserDTO> userList = sysUserService.queryAll();
+		int total = userList.size();
+		PageUtil pageResponse = new PageUtil(userList, total, limit, page);
+		return putData("page", pageResponse);
+	}
+	
+	//用户添加和更新
+	
+	//用户删除
 }

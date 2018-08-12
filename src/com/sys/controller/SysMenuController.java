@@ -46,7 +46,7 @@ public class SysMenuController extends BaseController{
 		
 		if(userId == 1) { // 系统管理员，拥有最高权限
 			menuList = sysMenuService.getAllMenuList(null);
-			System.out.println(">>>menuList1:" + JSON.toJSONString(menuList));
+			
 		}else {	//其他用户的菜单列表											
 			
 			List<SysRoleDTO> roleList = user.getRoleIdList();
@@ -58,7 +58,7 @@ public class SysMenuController extends BaseController{
 			}
 			menuList = sysMenuService.getAllMenuList(menuIds);
 		}
-		System.out.println(">>>menuList2:" + JSON.toJSONString(menuList));
+		
 		return putData("menuList", menuList);
 	}
 	

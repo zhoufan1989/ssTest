@@ -14,7 +14,7 @@ import com.base.controller.BaseController;
 
 import com.sys.dto.SysUserDTO;
 import com.sys.service.SysUserService;
-import com.util.PageUtil;
+import com.util.PageUtils;
 import com.util.ShiroUtils;
 
 /**
@@ -72,7 +72,7 @@ public class SysUserController extends BaseController{
 	public Object getUserList(int page, int limit) {
 		List<SysUserDTO> userList = sysUserService.queryAll();
 		int total = userList.size();
-		PageUtil pageResponse = new PageUtil(userList, total, limit, page);
+		PageUtils pageResponse = new PageUtils(userList, total, limit, page);
 		return putData("page", pageResponse);
 	}
 	

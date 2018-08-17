@@ -1,13 +1,15 @@
 package com.sys.controller;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.base.controller.BaseController;
@@ -69,8 +71,18 @@ public class SysUserController extends BaseController{
 	//用户列表
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:user:list")
-	public Object getUserList(int page, int limit) {
-		List<SysUserDTO> userList = sysUserService.queryAll();
+	public Object getUserList(int page, int limit,String userName) {
+		List<SysUserDTO> userList = null;
+		Query query = new Query();
+		if(StringUtils.isNotBlank(userName)) {
+			Pattern pattern = Pattern.compile(".*?" + userName.trim() + ".*?");
+			Criteria criteria = new Criteria();
+			query.addCriteria(criteria.orOperator(Criteria.where("userName").regex(pattern)));
+			userList = sysUserService.queryAll(query, SysUserDTO.class);
+			
+		}else {
+			userList =  sysUserService.queryAll();
+		}
 		int total = userList.size();
 		PageUtils pageResponse = new PageUtils(userList, total, limit, page);
 		return putData("page", pageResponse);

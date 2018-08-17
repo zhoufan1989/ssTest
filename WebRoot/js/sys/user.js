@@ -45,9 +45,15 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
-		
+		userName:null
 	},
 	methods: {
+		query: function () {
+			$("#jqGrid").jqGrid('setGridParam',{ 
+                postData:{'userName': vm.userName},
+                page:1 
+            }).trigger("reloadGrid");
+		},
 		update: function (event) {
 			var userId = getSelectedRow();
 			if(userId == null){

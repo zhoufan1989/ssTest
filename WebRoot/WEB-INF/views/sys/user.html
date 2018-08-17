@@ -6,7 +6,12 @@
 </head>
 <body>
 <div id="rrapp">
-	
+	<div class="grid-btn">
+		<div class="form-group col-sm-2">
+			<input type="text" class="form-control" v-model="userName" @keyup.enter="query" placeholder="用户名">
+		</div>
+		<button type="button" class="btn btn-default" @click="query">查询</button>
+	</div>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
 </div>

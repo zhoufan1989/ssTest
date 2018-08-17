@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -281,5 +284,21 @@ public class CarTest {
 		sysUserService.insert(user);
 	}
 	
-	
+	@Test
+	public void queryUser() {
+		String userName = "zhou";
+		List<SysUserDTO> userList = null;
+		
+		Query query = new Query();
+		if(StringUtils.isNotBlank(userName)) {
+			Pattern pattern = Pattern.compile(".*?" + userName.trim() + ".*?");
+			Criteria criteria = new Criteria();
+			query.addCriteria(criteria.orOperator(Criteria.where("userName").regex(pattern)));
+			userList = sysUserService.queryAll(query, SysUserDTO.class);
+	   }else {
+		    userList =  sysUserService.queryAll();
+	   }
+		
+	   System.out.println(">>>userList:" + JSONObject.toJSONString(userList));
+    }
 }

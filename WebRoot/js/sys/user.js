@@ -75,10 +75,13 @@ var vm = new Vue({
 				    data: JSON.stringify(userIds),
 				    success: function(r){
 						if(r.code == 0){
+							alert("userIds" + userIds);
+							console.log("userIds" + userIds);
 							alert('操作成功', function(index){
 								$("#jqGrid").trigger("reloadGrid");
 							});
 						}else{
+							alert("userIds" + userIds);
 							alert(r.msg);
 						}
 					}

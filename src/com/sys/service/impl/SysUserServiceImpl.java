@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -78,6 +80,16 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDTO, String> impl
 	@Override
 	public boolean insert(SysUserDTO sysUserDTO) {
 		sysUserDTO.setCreateTime(new Date());
+		String newPassword = new Sha256Hash(sysUserDTO.getPassword()).toHex();
+		sysUserDTO.setPassword(newPassword);
+		sysUserMapper.save(sysUserDTO);
+		return true;
+	}
+	
+	@Override
+	public boolean updater(SysUserDTO sysUserDTO) {
+		String newPassword = new Sha256Hash(sysUserDTO.getPassword()).toHex();
+		sysUserDTO.setPassword(newPassword);
 		sysUserMapper.save(sysUserDTO);
 		return true;
 	}
@@ -89,5 +101,24 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDTO, String> impl
 		user.setPassword(newPassword);
 		return true;
 	}
+
+	@Override
+	public SysUserDTO getCurrentSysUserDTO() {
+		String userName = (String) SecurityUtils.getSubject().getPrincipal();
+		SysUserDTO user = sysUserMapper.findByUserName(userName);
+		return user;
+	}
+
+	@Override
+	public int deleteBatchById(Integer[] userIds) {
+		int count = 0;
+		for(Integer userId : userIds) {
+			Query query = Query.query(Criteria.where("userId").is(userId));
+			
+		}
+		return 0;
+	}
+
+	
 
 }

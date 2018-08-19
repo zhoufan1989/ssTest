@@ -29,13 +29,20 @@ public interface SysUserService extends BaseService<SysUserDTO, String>{
 	public boolean insert(SysUserDTO sysUserDTO);
 	
 	/**
+	 * 编辑用户信息
+	 * @param sysUserDTO
+	 * @return
+	 */
+	public boolean updater(SysUserDTO sysUserDTO);
+	
+	/**
 	 * 根据用户账号名查询出账户信息
 	 * @param UserName
 	 * @return
 	 */
 	public SysUserDTO queryByUserName(String UserName);
 	
-
+	
 	/**
 	 * 修改密码
 	 * @param userId 用户ID
@@ -43,5 +50,15 @@ public interface SysUserService extends BaseService<SysUserDTO, String>{
 	 * @param newPassword 新密码
 	 */
 	public boolean updatePassword(int userId, String password, String newPassword);
+	
+	/**
+	 * 
+	 */
+	public int deleteBatchById(Integer[] usetIds);
+	
+	/**
+	 * 获取当前系统用户
+	 */
+	public SysUserDTO getCurrentSysUserDTO();
 	
 }

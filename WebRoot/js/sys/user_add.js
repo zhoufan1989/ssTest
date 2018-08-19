@@ -30,7 +30,7 @@ var vm = new Vue({
 			});
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.user.userId == null ? "../sys/user/save" : "../sys/user/update";
+			var url = vm.user.userId == null ? "../sys/user/save" : "../sys/user/update" ;
 			$.ajax({
 				type: "POST",
 			    url: url,

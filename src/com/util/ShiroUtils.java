@@ -4,12 +4,15 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
+import com.sys.dto.SysUserDTO;
+
 /**
  * Shiro工具类
  * @author zhoufan
  *
  */
 public class ShiroUtils {
+	
 	public static Session getSession() {
 		return SecurityUtils.getSubject().getSession();
 	}
@@ -38,5 +41,7 @@ public class ShiroUtils {
 		String kaptcha = getSessionAttribute(key).toString();
 		getSession().removeAttribute(key);
 		return kaptcha;
-	} 
+	}
+	
+	
 }

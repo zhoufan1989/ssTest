@@ -3,6 +3,7 @@ package com.sys.controller;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -10,6 +11,7 @@ import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.base.controller.BaseController;
@@ -36,8 +38,7 @@ public class SysUserController extends BaseController{
 	 */
 	@RequestMapping("/info")
 	public Object info() {
-		String userName = (String) SecurityUtils.getSubject().getPrincipal();
-		SysUserDTO user = sysUserService.queryByUserName(userName);
+		SysUserDTO user = sysUserService.getCurrentSysUserDTO();
 		return putData("user",user);
 	}
 	
@@ -88,7 +89,49 @@ public class SysUserController extends BaseController{
 		return putData("page", pageResponse);
 	}
 	
-	//用户添加和更新
+	//用户添加
+	@RequestMapping("/save")
+	@RequiresPermissions("sys:user:save")
+	public Object save(@RequestBody SysUserDTO user) {
+		if(StringUtils.isBlank(user.getUserName())) {
+			return error("用户名不能为空");
+		}
+		if(StringUtils.isBlank(user.getPassword())) {
+			return error("密码不能为空");
+		}
+		sysUserService.insert(user);					
+		
+		return putData();
+	}
+	
+	//用户添加
+	//用户添加
+	@RequestMapping("/update")
+	@RequiresPermissions("sys:user:update")
+	public Object update(@RequestBody SysUserDTO user) {
+		if(StringUtils.isBlank(user.getUserName())) {
+			return error("用户名不能为空");
+		}
+		if(StringUtils.isBlank(user.getPassword())) {
+			return error("密码不能为空");
+		}
+		sysUserService.update(user);					//更新
+		return putData();
+	}
 	
 	//用户删除
+	@RequestMapping("/delete")
+	@RequiresPermissions("sys:user:delete")
+	public Object delete(@RequestBody Integer[] userIds) {
+		SysUserDTO user = sysUserService.getCurrentSysUserDTO();
+		if(ArrayUtils.contains(userIds, 1)) {
+			return error("系统管理员不能删除");
+		}
+		if(ArrayUtils.contains(userIds, user.getUserId())) {
+			return error("当前用户不能删除");
+		}
+		
+		return putData();
+	}
+	
 }

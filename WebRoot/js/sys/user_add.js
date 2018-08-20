@@ -1,5 +1,5 @@
 //用户ID
-var userId = T.p("id");
+var id = T.p("id");
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
@@ -11,9 +11,9 @@ var vm = new Vue({
 		}
 	},
 	created: function() {
-		if(userId != null){
+		if(id != null){
 			this.title = "修改管理员";
-			this.getUser(userId)
+			this.getUser(id)
 		}
 		//获取角色信息
 		this.getRoleList();

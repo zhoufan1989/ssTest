@@ -11,6 +11,7 @@ import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -104,8 +105,19 @@ public class SysUserController extends BaseController{
 		return putData();
 	}
 	
-	//用户添加
-	//用户添加
+	/**
+	 * 用户信息
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/info/{id}")
+	@RequiresPermissions("sys:user:info")
+	public Object info(@PathVariable("id") String id) {
+		SysUserDTO user = sysUserService.queryById(id);
+		return putData("user", user);
+	}
+	
+	//用户编辑
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:user:update")
 	public Object update(@RequestBody SysUserDTO user) {

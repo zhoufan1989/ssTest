@@ -60,7 +60,7 @@ public class SysUserController extends BaseController{
 		newPassword = new Sha256Hash(newPassword).toHex();
 		// 更新密码
 		SysUserDTO user = (SysUserDTO) SecurityUtils.getSubject().getPrincipal();
-		boolean userIs = sysUserService.updatePassword(user.getUserId(), password, newPassword);
+		boolean userIs = sysUserService.updatePassword(user.getUserName(), password, newPassword);
 		if (userIs == false) {
 			return error("原密码不正确");
 		}
@@ -122,15 +122,15 @@ public class SysUserController extends BaseController{
 	//用户删除
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:user:delete")
-	public Object delete(@RequestBody Integer[] userIds) {
+	public Object delete(@RequestBody String[] ids) {
 		SysUserDTO user = sysUserService.getCurrentSysUserDTO();
-		if(ArrayUtils.contains(userIds, 1)) {
+		if(ArrayUtils.contains(ids, 1)) {
 			return error("系统管理员不能删除");
 		}
-		if(ArrayUtils.contains(userIds, user.getUserId())) {
+		if(ArrayUtils.contains(ids, user.getId())) {
 			return error("当前用户不能删除");
 		}
-		
+		sysUserService.deleteBatchById(ids);
 		return putData();
 	}
 	

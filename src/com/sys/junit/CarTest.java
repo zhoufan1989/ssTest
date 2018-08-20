@@ -27,7 +27,6 @@ import com.sys.dto.SysUserDTO;
 import com.sys.service.SysMenuService;
 import com.sys.service.SysRoleService;
 import com.sys.service.SysUserService;
-import com.util.EndecryptUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class) //让测试运行于Spring环境  
 @ContextConfiguration({"classpath*:spring/spring-applicationContext.xml"}) //引入Spring配置 
@@ -83,7 +82,7 @@ public class CarTest {
 		SysUserDTO user = new SysUserDTO();
 		user.setName("zhoufan");
 		user.setUserName("zhoufan");
-		user.setUserId(2);
+		
 		user.setCreateTime(new Date());
 		user.setPassword(new Sha256Hash("123456").toHex());
 		
@@ -100,7 +99,7 @@ public class CarTest {
 	@Test
 	public void updateUsers() {
 		SysUserDTO user = sysUserService.queryByUserName("admin");
-		user.setUserId(1);
+		
 		sysUserService.update(user);
 	}
 	
@@ -274,11 +273,10 @@ public class CarTest {
 	public void addUserdto() {
 		SysUserDTO user = new SysUserDTO();
 		user.setCreateTime(new Date());
-		user.setName("zhoufan");
-		user.setUserName("zhoufan");
-		user.setUserId(1);
-		user.setStatus(0);
-		user.setPassword(new Sha256Hash("123456").toHex());
+		user.setName("admin");
+		user.setUserName("admin");
+		user.setStatus(1);
+		user.setPassword("123456");
 		List<SysRoleDTO> roleList = sysRoleService.queryAll();
 		user.setRoleIdList(roleList);
 		sysUserService.insert(user);

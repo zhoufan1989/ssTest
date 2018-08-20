@@ -25,14 +25,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDTO, String> impl
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	
-
-	
-	@Autowired
-	private SysRoleService sysRoleService;
-	
-	@Autowired
-	private SysMenuService sysMenuService;
-	
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
@@ -95,8 +87,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDTO, String> impl
 	}
 
 	@Override
-	public boolean updatePassword(int userId, String password, String newPassword) {
-		Query query = Query.query(Criteria.where("password").is(password).and("userId").is(userId));
+	public boolean updatePassword(String userName, String password, String newPassword) {
+		Query query = Query.query(Criteria.where("password").is(password).and("userName").is(userName));
 		SysUserDTO user = mongoTemplate.findOne(query, SysUserDTO.class);
 		user.setPassword(newPassword);
 		return true;
@@ -110,13 +102,14 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDTO, String> impl
 	}
 
 	@Override
-	public int deleteBatchById(Integer[] userIds) {
+	public int deleteBatchById(String[] ids) {
 		int count = 0;
-		for(Integer userId : userIds) {
-			Query query = Query.query(Criteria.where("userId").is(userId));
-			
+		for(String id : ids) {
+			SysUserDTO user = sysUserMapper.findById(id);
+			sysUserMapper.delete(user);
+			count++;
 		}
-		return 0;
+		return count;
 	}
 
 	

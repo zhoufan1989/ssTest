@@ -49,12 +49,12 @@ public interface SysUserService extends BaseService<SysUserDTO, String>{
 	 * @param password 原密码
 	 * @param newPassword 新密码
 	 */
-	public boolean updatePassword(int userId, String password, String newPassword);
+	public boolean updatePassword(String userName, String password, String newPassword);
 	
 	/**
 	 * 
 	 */
-	public int deleteBatchById(Integer[] usetIds);
+	public int deleteBatchById(String[] usetIds);
 	
 	/**
 	 * 获取当前系统用户

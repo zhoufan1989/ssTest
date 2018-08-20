@@ -23,4 +23,6 @@ public interface BaseService<T, ID extends Serializable> {
 	
 	public int update(T t);
 	
+	
+	
 }

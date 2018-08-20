@@ -18,10 +18,6 @@ public class SysUserDTO extends BaseDTO{
 	
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * 用户ID
-	 */
-	private int userId;
 	
 	/**
 	 * 用户真实姓名
@@ -68,17 +64,6 @@ public class SysUserDTO extends BaseDTO{
 	 * 创建时间
 	 */
 	private Date createTime;
-	
-	
-	
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
 	
 	
 	public String getName() {

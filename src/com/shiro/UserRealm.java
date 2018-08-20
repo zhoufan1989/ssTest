@@ -47,12 +47,11 @@ public class UserRealm extends AuthorizingRealm{
 		 */
 		String userName = (String) principals.getPrimaryPrincipal();
 		SysUserDTO user = sysUserService.queryByUserName(userName);
-		int userId = user.getUserId();
-		
+
 		List<String> permsList = null;
 		
 		//系统管理员,拥有最高权限
-		if(userId == 1) {
+		if(StringUtils.equals(userName, "admin")) {
 			List<SysMenuDTO> menuList = sysMenuService.queryAll();
 			permsList = new ArrayList<>(menuList.size());
 			for(SysMenuDTO menu : menuList) {

@@ -1,5 +1,5 @@
 //用户ID
-var userId = T.p("userId");
+var userId = T.p("id");
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
@@ -19,8 +19,8 @@ var vm = new Vue({
 		this.getRoleList();
     },
 	methods: {
-		getUser: function(userId){
-			$.get("../sys/user/info/"+userId, function(r){
+		getUser: function(id){
+			$.get("../sys/user/info/"+id, function(r){
 				vm.user = r.user;
 			});
 		},
@@ -30,7 +30,7 @@ var vm = new Vue({
 			});
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.user.userId == null ? "../sys/user/save" : "../sys/user/update" ;
+			var url = vm.user.id == null ? "../sys/user/save" : "../sys/user/update" ;
 			$.ajax({
 				type: "POST",
 			    url: url,

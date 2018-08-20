@@ -4,8 +4,8 @@ $(function () {
         datatype: "json",
 //        postData:{'gridPager':{'currPage':1,'pageSize':10}}, //
         colModel: [			
-			{ label: '用户ID', name: 'userId', width: 45, key: true },
-			{ label: '用户名', name: 'userName', width: 75 },
+			{ label: '管理员名称', name: 'userName', width: 75 },
+			{ label: '真实名称', name: 'name', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
 			{ label: '手机号', name: 'mobile', width: 100 },
 			{ label: '状态', name: 'status', width: 80, formatter: function(value, options, row){
@@ -55,16 +55,16 @@ var vm = new Vue({
             }).trigger("reloadGrid");
 		},
 		update: function (event) {
-			var userId = getSelectedRow();
-			if(userId == null){
+			var id = getSelectedRow();
+			if(id == null){
 				return ;
 			}
 			
-			location.href = "user_add.html?userId="+userId;
+			location.href = "user_add.html?id="+id;
 		},
 		del: function (event) {
-			var userIds = getSelectedRows();
-			if(userIds == null){
+			var ids = getSelectedRows();
+			if(ids == null){
 				return ;
 			}
 			
@@ -72,16 +72,16 @@ var vm = new Vue({
 				$.ajax({
 					type: "POST",
 				    url: "../sys/user/delete",
-				    data: JSON.stringify(userIds),
+				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
-							alert("userIds" + userIds);
-							console.log("userIds" + userIds);
+							alert("ids" + ids);
+							console.log("ids" + ids);
 							alert('操作成功', function(index){
 								$("#jqGrid").trigger("reloadGrid");
 							});
 						}else{
-							alert("userIds" + userIds);
+							alert("ids" + ids);
 							alert(r.msg);
 						}
 					}

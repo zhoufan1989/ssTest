@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
 import com.base.controller.BaseController;
 import com.sys.dto.SysMenuDTO;
 import com.sys.dto.SysRoleDTO;
@@ -84,7 +83,6 @@ public class SysRoleController extends BaseController{
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:role:save")
 	public Object save(@RequestBody SysRoleDTO role) {
-		System.out.println(">>>role:" + JSON.toJSONString(role));
 		if(StringUtils.isEmpty(role.getRoleName())) {
 			return error("角色名称不为空");
 		}

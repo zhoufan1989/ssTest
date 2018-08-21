@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +59,16 @@ public class SysMenuController extends BaseController{
 			menuList = sysMenuService.getAllMenuList(menuIds);
 		}
 		
+		return putData("menuList", menuList);
+	}
+	
+	/**
+	 * 角色授权菜单
+	 */
+	@RequestMapping("/perms")
+	@RequiresPermissions("sys:menu:perms")
+	public Object perms() {
+		List<SysMenuDTO> menuList = sysMenuService.queryAll();
 		return putData("menuList", menuList);
 	}
 	

@@ -6,4 +6,6 @@ import com.sys.dto.SysRoleDTO;
 public interface SysRoleMapper extends BaseMapper<SysRoleDTO, String>{
   
 	public SysRoleDTO findRoleByRoleId(int roleId);
+	
+	public SysRoleDTO findRoleById(String id);
 }

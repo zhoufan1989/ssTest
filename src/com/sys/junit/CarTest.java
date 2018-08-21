@@ -48,6 +48,8 @@ public class CarTest {
 	
 	@Autowired
 	private SysRoleService sysRoleService;
+	
+	
 
 	
 	@Test
@@ -299,4 +301,39 @@ public class CarTest {
 		
 	   System.out.println(">>>userList:" + JSONObject.toJSONString(userList));
     }
+	
+	@Test
+	public void queryPassword() {
+		SysUserDTO user = sysUserService.queryByUserName("admin");
+		String pwd = StringUtils.substring(user.getPassword(),64);
+		System.out.println(">>>pwd:" + pwd);
+	}
+	
+	@Test
+	public void getUserInfo() {
+		SysUserDTO user = sysUserService.queryByUserName("admin");
+		user.setPassword("");
+		System.out.println(">>>pwd:" + JSON.toJSONString(user));
+	}
+	
+	@Test
+	public void getRoleInfo() {
+		SysRoleDTO role = sysRoleService.queryRoleById("5b556bf4ce62332790a16ce1");
+		System.out.println(">>>role:" + JSON.toJSONString(role));
+	}
+	
+	@Test
+	public void getRole() {
+		String role = "{\'roleName\': \'aa\', remark: \'aa\', \'menuIdList\': [1, 6, 7, 8, 9, 10, 11, 12, 13, 14]}";
+		SysRoleDTO roleDTO =JSON.parseObject(role, SysRoleDTO.class);
+		System.out.println(">>>roleDTO:" + JSON.toJSONString(roleDTO));
+		List<Integer> menuIdList = roleDTO.getMenuIdList();
+		List<SysMenuDTO> menuList = new ArrayList<>();
+		for(Integer menuId : menuIdList) {
+			SysMenuDTO menu = sysMenuService.queryMenuByMenuId(menuId);
+			menuList.add(menu);
+		}
+		roleDTO.setMenuList(menuList);
+		sysRoleService.insert(roleDTO);
+	}
 }

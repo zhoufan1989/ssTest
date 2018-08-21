@@ -114,6 +114,7 @@ public class SysUserController extends BaseController{
 	@RequiresPermissions("sys:user:info")
 	public Object info(@PathVariable("id") String id) {
 		SysUserDTO user = sysUserService.queryById(id);
+		user.setPassword("");
 		return putData("user", user);
 	}
 	

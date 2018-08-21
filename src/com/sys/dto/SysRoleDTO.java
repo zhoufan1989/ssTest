@@ -34,6 +34,11 @@ public class SysRoleDTO extends BaseDTO{
 	@DBRef
 	private List<SysMenuDTO> menuList;
 	
+	/**
+	 * 选取的资源menuId列表
+	 */
+	private List<Integer> menuIdList;
+	
 	private Date addDate;
 
 	public int getRoleId() {
@@ -66,6 +71,14 @@ public class SysRoleDTO extends BaseDTO{
 
 	public void setMenuList(List<SysMenuDTO> menuList) {
 		this.menuList = menuList;
+	}
+	
+	public List<Integer> getMenuIdList() {
+		return menuIdList;
+	}
+
+	public void setMenuIdList(List<Integer> menuIdList) {
+		this.menuIdList = menuIdList;
 	}
 
 	public Date getAddDate() {

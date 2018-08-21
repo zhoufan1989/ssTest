@@ -14,4 +14,14 @@ public interface SysRoleService extends BaseService<SysRoleDTO, String>{
 	 * 根据角色Id查询角色详情
 	 */
 	public SysRoleDTO queryRoleByRoleId(int roleId);
+	
+	/**
+	 * 根据角色记录Id
+	 */
+	public SysRoleDTO queryRoleById(String id);
+	
+	/**
+	 * 删除角色
+	 */
+	public int deleteBatch(String[] ids);
 }

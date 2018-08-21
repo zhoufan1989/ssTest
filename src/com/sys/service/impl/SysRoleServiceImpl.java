@@ -1,5 +1,7 @@
 package com.sys.service.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDTO, String> impl
 	public boolean insert(SysRoleDTO sysRoleDTO) {
 		
 		SysRoleDTO role = sysRoleDTO;
+		role.setAddDate(new Date());
 		sysRoleMapper.save(role);
 		return true;
 	}
@@ -33,5 +36,22 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDTO, String> impl
 		SysRoleDTO role = sysRoleMapper.findRoleByRoleId(roleId);
 		return role;
 	}
-		
+
+	@Override
+	public SysRoleDTO queryRoleById(String id) {
+		SysRoleDTO role = sysRoleMapper.findRoleById(id);
+		return role;
+	}
+
+	@Override
+	public int deleteBatch(String[] ids) {
+		int count = 0;
+		for(String id : ids) {
+			SysRoleDTO role = sysRoleMapper.findRoleById(id);
+			sysRoleMapper.delete(role);
+			count++;
+		}
+		return count;
+	}
+	
 }

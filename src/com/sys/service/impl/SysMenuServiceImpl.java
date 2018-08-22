@@ -83,8 +83,9 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuDTO, String> impl
 	}
 
 	@Override
-	public SysMenuDTO queryObject(String id) {
-		return null;
+	public SysMenuDTO queryMenuById(String id) {
+		SysMenuDTO menu = sysMenuMapper.findMenuById(id);
+		return menu;
 	}
 
 	@Override
@@ -97,6 +98,17 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuDTO, String> impl
 	public SysMenuDTO queryMenuByMenuId(int menuId) {
 		SysMenuDTO menu = sysMenuMapper.findMenuByMenuId(menuId);
 		return menu;
+	}
+
+	@Override
+	public int deleteBatch(String[] ids) {
+		int count = 0;
+		for(String id : ids) {
+			SysMenuDTO menu = sysMenuMapper.findMenuById(id);
+			sysMenuMapper.delete(menu);
+			count++;
+		}
+		return count;
 	}
 
 	

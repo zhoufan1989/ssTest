@@ -33,7 +33,7 @@ public interface SysMenuService extends BaseService<SysMenuDTO, String>{
 	 * @param id 菜单记录ID
 	 * @return 
 	 */
-	public SysMenuDTO queryObject(String id);
+	public SysMenuDTO queryMenuById(String id);
 	
 	/**
 	 * 
@@ -52,4 +52,9 @@ public interface SysMenuService extends BaseService<SysMenuDTO, String>{
 	 * @return
 	 */
 	public List<SysMenuDTO> getAllMenuList(List<Integer> menuIdList);
+	
+	/**
+	 * 目录删除
+	 */
+	public int deleteBatch(String[] ids);
 }

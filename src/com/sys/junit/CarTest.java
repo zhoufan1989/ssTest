@@ -2,11 +2,13 @@ package com.sys.junit;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.junit.Test;
@@ -336,4 +338,23 @@ public class CarTest {
 		roleDTO.setMenuList(menuList);
 		sysRoleService.insert(roleDTO);
 	}
+	
+	@Test
+	public void getMenuListNotButton() {
+		Query query = Query.query(Criteria.where("type").nin(2));
+		List<SysMenuDTO> menuList = sysMenuService.queryAll(query, SysMenuDTO.class);
+		System.out.println(">>>menuList:" + JSON.toJSONString(menuList));
+	}
+	
+	@Test
+	public void getMenuIdMax() {
+		List<SysMenuDTO> list = sysMenuService.queryAll();
+		List<Integer> menuList = new ArrayList<>();
+		for(SysMenuDTO menu : list) {
+			menuList.add(menu.getMenuId());
+		}
+		int i = Collections.max(menuList);
+		System.out.println(">>>i:" + i);
+	}
+	
 }

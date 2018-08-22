@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SysPageController {
 	@RequestMapping("sys/{url}.html")
 	public String page(@PathVariable("url") String url) {
-		return "sys/" + url + ".html";
+		String key = url;
+		return "sys/" + key + ".html";
 	}
 
+	
 	
 	@RequestMapping("smart/{url}.html")
 	public String getProduct(@PathVariable("url") String url){

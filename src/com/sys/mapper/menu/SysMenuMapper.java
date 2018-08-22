@@ -10,4 +10,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenuDTO, String>{
 	public SysMenuDTO findMenuByMenuId(int menuId);
 	
 	public List<SysMenuDTO> findMenuByParentId(int parentId);
+	
+	public SysMenuDTO findMenuById(String id);
 }

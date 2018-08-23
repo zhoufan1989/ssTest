@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,19 +46,20 @@ public class SysRoleController extends BaseController{
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:role:list")
 	public Object getRoleList(int page, int limit,String roleName) {
-		List<SysRoleDTO> roleList = null;
+		PageUtils pageSelect = new PageUtils();
+		pageSelect.setCurrPage(page);	//当前页数
+		pageSelect.setPageSize(limit);  //每页记录数
+		Pageable pageable = new PageRequest(page - 1, limit, Direction.DESC, "_id");
 		Query query = new Query();
 		if(StringUtils.isNotBlank(roleName)) {
 			Pattern pattern = Pattern.compile(".*?" + roleName.trim() + ".*?");
 			Criteria criteria = new Criteria();
 			query.addCriteria(criteria.orOperator(Criteria.where("roleName").regex(pattern)));
-			roleList = sysRoleService.queryAll(query, SysRoleDTO.class);
-		}else {
-			roleList =  sysRoleService.queryAll();
+			
 		}
-		int total = roleList.size();
-		PageUtils pageResponse = new PageUtils(roleList, total, limit, page);
-		return putData("page", pageResponse);
+		
+		Page<SysRoleDTO> pageResult = sysRoleService.queryAllBy(query, pageable, SysRoleDTO.class);
+		return putPageData(pageSelect, pageResult);
 	}
 	
 	/**

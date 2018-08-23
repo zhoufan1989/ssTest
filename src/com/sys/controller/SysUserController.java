@@ -9,6 +9,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.base.controller.BaseController;
-
+import com.sys.dto.SysRoleDTO;
 import com.sys.dto.SysUserDTO;
 import com.sys.service.SysUserService;
 import com.util.PageUtils;
@@ -74,20 +78,18 @@ public class SysUserController extends BaseController{
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:user:list")
 	public Object getUserList(int page, int limit,String userName) {
-		List<SysUserDTO> userList = null;
+		PageUtils pageSelect = new PageUtils();
+		pageSelect.setCurrPage(page);	//当前页数
+		pageSelect.setPageSize(limit);  //每页记录数
+		Pageable pageable = new PageRequest(page - 1, limit, Direction.DESC, "_id");
 		Query query = new Query();
 		if(StringUtils.isNotBlank(userName)) {
 			Pattern pattern = Pattern.compile(".*?" + userName.trim() + ".*?");
 			Criteria criteria = new Criteria();
 			query.addCriteria(criteria.orOperator(Criteria.where("userName").regex(pattern)));
-			userList = sysUserService.queryAll(query, SysUserDTO.class);
-			
-		}else {
-			userList =  sysUserService.queryAll();
 		}
-		int total = userList.size();
-		PageUtils pageResponse = new PageUtils(userList, total, limit, page);
-		return putData("page", pageResponse);
+		Page<SysUserDTO> pageResult = sysUserService.queryAllBy(query, pageable, SysUserDTO.class);
+		return putPageData(pageSelect, pageResult);
 	}
 	
 	//用户添加

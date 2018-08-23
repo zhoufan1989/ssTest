@@ -357,4 +357,12 @@ public class CarTest {
 		System.out.println(">>>i:" + i);
 	}
 	
+	@Test
+	public void getNu() {
+		int totalCount = 28;
+		int pageSize = 10;
+		
+		int page = (int) Math.ceil((double) totalCount / pageSize);
+		System.out.println(">>>page:" + page);
+	}
 }

@@ -1,10 +1,11 @@
 package com.util;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageUtils {
+public class PageUtils implements Serializable{
 	
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	
 	//总记录数
 	private int totalCount;
@@ -21,14 +22,6 @@ private static final long serialVersionUID = 1L;
 	//列表数据
 	private List<?> list;
 	
-	public PageUtils(List<?> list, int totalCount, int pageSize, int currPage) {
-		this.list = list;
-		this.totalCount = totalCount;
-		this.pageSize = pageSize;
-		this.currPage = currPage;
-		this.totalPage = (int) Math.ceil(totalCount / pageSize); 
-	}
-
 	
 
 	public int getTotalCount() {

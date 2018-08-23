@@ -9,6 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -115,19 +119,19 @@ public class SysMenuController extends BaseController{
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:menu:list")
 	public Object menuPageList(int page, int limit,String name) {
-		List<SysMenuDTO> menuList = null;
+		PageUtils pageSelect = new PageUtils();
+		pageSelect.setCurrPage(page);	//当前页数
+		pageSelect.setPageSize(limit);  //每页记录数
+		Pageable pageable = new PageRequest(page - 1, limit, Direction.DESC, "_id");
 		Query query = new Query();
 		if(StringUtils.isNotBlank(name)) {
 			Pattern pattern = Pattern.compile(".*?" + name.trim() + ".*?");
 			Criteria criteria = new Criteria();
 			query.addCriteria(criteria.orOperator(Criteria.where("name").regex(pattern)));
-			menuList = sysMenuService.queryAll(query, SysMenuDTO.class);
-		}else {
-			menuList =  sysMenuService.queryAll();
+			
 		}
-		int total = menuList.size();
-		PageUtils pageResponse = new PageUtils(menuList, total, limit, page);
-		return putData("page", pageResponse);
+		Page<SysMenuDTO> pageResult = sysMenuService.queryAllBy(query, pageable, SysMenuDTO.class);
+		return putPageData(pageSelect, pageResult);
 	}
 	
 	@RequestMapping("/save")

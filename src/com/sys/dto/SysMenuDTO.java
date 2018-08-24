@@ -1,5 +1,6 @@
 package com.sys.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -70,6 +71,8 @@ public class SysMenuDTO extends BaseDTO{
 	 * 列表
 	 */
 	private List<?> list;
+	
+	private Date addDate;
 	
 	public int getMenuId() {
 		return menuId;
@@ -158,7 +161,13 @@ public class SysMenuDTO extends BaseDTO{
 	public void setList(List<?> list) {
 		this.list = list;
 	}
-	
-	
+
+	public Date getAddDate() {
+		return addDate;
+	}
+
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
+	}
 	
 }

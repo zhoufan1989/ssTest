@@ -365,4 +365,25 @@ public class CarTest {
 		int page = (int) Math.ceil((double) totalCount / pageSize);
 		System.out.println(">>>page:" + page);
 	}
+	
+	@Test 
+	public void getMenuList() {
+		List<SysMenuDTO> list = sysMenuService.queryAll();
+		System.out.println(">>>list:" + JSON.toJSONString(list));
+	}
+	
+	@Test
+	public void saveMenu() {
+		SysMenuDTO menu = new SysMenuDTO();
+		menu.setIcon("");
+		menu.setMenuId(26);
+		menu.setName("删除");
+		menu.setOrderNum(0);
+		menu.setParentId(5);
+		menu.setParentName("菜单管理");
+		menu.setPerms("sys:menu:delete");
+		menu.setType(2);
+		menu.setUrl("");
+		sysMenuService.insert(menu);
+	}
 }

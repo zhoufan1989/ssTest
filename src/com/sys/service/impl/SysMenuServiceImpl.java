@@ -1,6 +1,7 @@
 package com.sys.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuDTO, String> impl
 
 	@Override
 	public boolean insert(SysMenuDTO sysMenuDTO) {
+		sysMenuDTO.setAddDate(new Date());
 		sysMenuMapper.save(sysMenuDTO);
 		return true;
 	}

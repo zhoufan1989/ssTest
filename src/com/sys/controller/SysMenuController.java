@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.base.controller.BaseController;
@@ -27,6 +28,7 @@ import com.sys.dto.SysUserDTO;
 import com.sys.service.SysMenuService;
 import com.sys.service.SysUserService;
 import com.util.PageUtils;
+import com.util.ShiroUtils;
 import com.util.constant.Constant.MenuType;
 import com.util.exception.RRException;
 

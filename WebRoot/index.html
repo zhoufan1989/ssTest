@@ -34,7 +34,7 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 		  <li><a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
-          <li><a href="logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
+          <li><a href="logout.html"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
 		</ul>
       </div>
     </nav>
@@ -50,7 +50,6 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">导航菜单</li>
-        
         <!-- vue生成的菜单 -->
 		<menu-item :item="item" v-for="item in menuList"></menu-item>
       </ul>
@@ -63,7 +62,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <ol class="breadcrumb" id="nav_title" style="position:static;float:none;">
-        <li class="active"><i class="fa fa-home" style="font-size:20px;position:relative;top:2px;left:-3px;"></i> &nbsp; 首页</li>
+        <li class="active"><i class="fa fa-home" style="font-size:20px;position:relative;top:2px;left:-3px;"></i> &nbsp;首页</li>
         <li class="active">{{navTitle}}</li>
       </ol>
     </section>

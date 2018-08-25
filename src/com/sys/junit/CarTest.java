@@ -375,15 +375,15 @@ public class CarTest {
 	@Test
 	public void saveMenu() {
 		SysMenuDTO menu = new SysMenuDTO();
-		menu.setIcon("");
-		menu.setMenuId(26);
-		menu.setName("删除");
-		menu.setOrderNum(0);
-		menu.setParentId(5);
+		menu.setIcon("fa fa-dashboard");
+		menu.setMenuId(39);
+		menu.setName("首页");
+		menu.setOrderNum(2);
+		menu.setParentId(0);
 		menu.setParentName("菜单管理");
-		menu.setPerms("sys:menu:delete");
-		menu.setType(2);
-		menu.setUrl("");
+		menu.setPerms("");
+		menu.setType(3);
+		menu.setUrl("sys/main.html");
 		sysMenuService.insert(menu);
 	}
 }

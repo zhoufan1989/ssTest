@@ -11,7 +11,7 @@ $(function () {
 			{ label: '菜单URL', name: 'url', width: 100 },
 			{ label: '授权标识', name: 'perms', width: 100 },
 			{ label: '类型', name: 'type', width: 50, formatter: function(value, options, row){
-				if(value === 0){
+				if(value === 0 ){
 					return '<span class="label label-primary">目录</span>';
 				}
 				if(value === 1){

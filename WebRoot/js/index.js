@@ -5,10 +5,8 @@ var menuItem = Vue.extend({
 	template:[
 		      
 	          '<li >',
-	          	'<a v-if="item.type === 3" :href="\'#\'+item.url" > ',
-	      			'<i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}',
-	      		'</a>',
-	          	'<a v-if="item.type === 0" href="javascript:;">',
+	          	
+	          	'<a v-if="item.type === 0 && item.url === \'\' && item.parentId === 0" href="javascript:;">',
 	          		'<i v-if="item.icon != null" :class="item.icon"></i>',
 	          		'<span>{{item.name}}</span>',
 	          		'<i class="fa fa-angle-left pull-right"></i>',
@@ -18,6 +16,9 @@ var menuItem = Vue.extend({
 	          	'</ul>',
 	          	
 	          	'<a v-if="item.type === 1" :href="\'#\'+item.url"><i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}</a>',
+	          	'<a v-if="item.type === 0 && item.url !==\'\' && item.parentId === 0" :href="\'#\'+item.url"> ',
+          			'<i v-if="item.icon != null " :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}',
+          		'</a>',
 	          '</li>'
 	].join('')
 });
@@ -125,8 +126,18 @@ var vm = new Vue({
 function routerList(router, menuList){
 	for(var key in menuList){
 		var menu = menuList[key];
-		if(menu.type == 0){
+		if(menu.type == 0 && menu.url == "" && menu.parentId == 0){
 			routerList(router, menu.list);
+			
+		}else if(menu.type == 0 && menu.url != "" && menu.parentId == 0){
+			router.add('#'+menu.url, function() {
+				var url = window.location.hash;
+				//替换iframe的url
+			    vm.main = url.replace('#', '');
+			    
+			    //菜单展开式
+			    $("a[href='"+url+"']").text();
+			});
 		}else if(menu.type == 1){
 			router.add('#'+menu.url, function() {
 				var url = window.location.hash;
@@ -139,15 +150,6 @@ function routerList(router, menuList){
 			    
 			    vm.navTitle = $("a[href='"+url+"']").text();
 			   
-			});
-		}else if(menu.type == 3){
-			router.add('#'+menu.url, function() {
-				var url = window.location.hash;
-				//替换iframe的url
-			    vm.main = url.replace('#', '');
-			    
-			    //菜单展开式
-			    $("a[href='"+url+"']").text();
 			});
 		}
 	}

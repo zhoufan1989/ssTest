@@ -11,16 +11,16 @@
 		<div class="form-group col-sm-2">
 			<input type="text" class="form-control" v-model="roleName" @keyup.enter="query" placeholder="用户名">
 		</div>
-		<button type="button" class="btn btn-default" @click="query">查询</button>
+		<button type="button" class="btn btn-info" @click="query"><span class="glyphicon glyphicon-search"></span>查询</button>
 		
 		#if($shiro.hasPermission("sys:role:save"))
-		<a class="btn btn-default" href="role_add.html">新增</a>
+		<a class="btn btn-success btn-flat" href="role_add.html"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增</a>
 		#end
 		#if($shiro.hasPermission("sys:role:update"))
-		<button type="button"  class="btn btn-default" @click="update">修改</button>
+		<button type="button"  class="btn btn-warning" @click="update"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改</button>
 		#end
 		#if($shiro.hasPermission("sys:role:delete"))
-		<button type="button" class="btn btn-default" @click="del">删除</button>
+		<button type="button" class="btn btn-danger" @click="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除</button>
 		#end
 		
 	</div>

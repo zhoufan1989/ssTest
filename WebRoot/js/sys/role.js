@@ -37,9 +37,15 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
-		
+		roleName:null
 	},
 	methods: {
+		query: function () {
+			$("#jqGrid").jqGrid('setGridParam',{ 
+                postData:{'roleName': vm.roleName},
+                page:1 
+            }).trigger("reloadGrid");
+		},
 		update: function (event) {
 			var id = getSelectedRow();
 			if(id == null){

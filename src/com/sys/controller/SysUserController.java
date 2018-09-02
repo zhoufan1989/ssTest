@@ -1,6 +1,5 @@
 package com.sys.controller;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.base.controller.BaseController;
-import com.sys.dto.SysRoleDTO;
 import com.sys.dto.SysUserDTO;
 import com.sys.service.SysUserService;
 import com.util.PageUtils;

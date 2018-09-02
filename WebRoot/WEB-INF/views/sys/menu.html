@@ -7,6 +7,10 @@
 <body>
 <div id="rrapp">
 	<div class="grid-btn">
+		<div class="form-group col-sm-2">
+			<input type="text" class="form-control" v-model="name" @keyup.enter="query" placeholder="用户名">
+		</div>
+		<button type="button" class="btn btn-default" @click="query">查询</button>
 		#if($shiro.hasPermission("sys:menu:save"))
 		<a class="btn btn-default" href="menu_add.html">新增</a>
 		#end

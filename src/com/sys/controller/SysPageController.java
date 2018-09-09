@@ -17,11 +17,9 @@ public class SysPageController {
 		return "sys/" + key + ".html";
 	}
 
-	
-	
-	@RequestMapping("smart/{url}.html")
+	@RequestMapping("file/{url}.html")
 	public String getProduct(@PathVariable("url") String url){
-		return "smart/" + url + ".html";
+		return "file/" + url + ".html";
 	}
 
 }

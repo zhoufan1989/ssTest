@@ -18,6 +18,9 @@
 		#if($shiro.hasPermission("file:data:delete"))
 		<button type="button"  class="btn btn-danger" @click="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除</button>
 		#end
+		
+		<button type="button" class="btn btn-success btn-flat" @click="excelExport"><span class="glyphicon glyphicon-download-alt"></span>导出</button>
+		
 	</div>
 	<table id="jqGrid"></table>
     <div id="jqGridPager"></div>

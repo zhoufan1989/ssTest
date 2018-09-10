@@ -55,6 +55,23 @@ var vm = new Vue({
 			
 			location.href = "file_add.html?id="+id;
 		},
+		excelExport: function (event){
+			var url = "../file/data/fileDataExport";
+			$.ajax({
+				type: "POST",
+			    url: url,
+			    data: JSON.stringify(vm.name),
+			    success: function(r){
+			    	if(r.code === 0){
+						alert('文件上传成功', function(index){
+							vm.back();
+						});
+					}else{
+						alert(r.msg);
+					}
+				}
+			});
+		},
 		del: function (event) {
 			var ids = getSelectedRows();
 			if(ids == null){
@@ -74,7 +91,6 @@ var vm = new Vue({
 								$("#jqGrid").trigger("reloadGrid");
 							});
 						}else{
-							alert("ids" + ids);
 							alert(r.msg);
 						}
 					}

@@ -1,6 +1,10 @@
 package com.sys.controller;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -8,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.base.controller.BaseController;
 import com.sys.dto.FileDataDTO;
 import com.sys.service.FileDataService;
+import com.util.ExcelUtil;
 import com.util.PageUtils;
 
 /**
@@ -93,6 +99,29 @@ public class FileManagerController extends BaseController{
 		}
 		Page<FileDataDTO> pageResult = fileDataService.queryAllBy(query, pageable, FileDataDTO.class);
 		return putPageData(pageSelect, pageResult);
+	}
+	
+	@RequestMapping("/fileDataExport")
+	@ResponseBody
+	public Object fileDataExport(HttpServletResponse response, String name) {
+		LinkedHashMap<String, String> fieldMap = new LinkedHashMap<>();
+		fieldMap.put("name", "名称");
+		fieldMap.put("age", "年龄");
+		fieldMap.put("addTime", "添加时间");
+		
+		try {
+			Query query = new Query();
+			//名称
+			if(StringUtils.isNotBlank(name)) {
+				query.addCriteria(Criteria.where("name").is(name));
+			}
+			query.with(new Sort(Direction.DESC, "addTime"));
+			List<FileDataDTO> list = fileDataService.queryAll(query, FileDataDTO.class);
+			new ExcelUtil().listToExcel(list, fieldMap, "数据测试统计表","111.xsl", response, 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return putData("massage", "文件上传成功");
 	}
 	
 }

@@ -60,15 +60,12 @@ var vm = new Vue({
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.name),
+			    data: {
+			    	   name:vm.name
+			    }
+			    ,
 			    success: function(r){
-			    	if(r.code === 0){
-						alert('文件上传成功', function(index){
-							vm.back();
-						});
-					}else{
-						alert(r.msg);
-					}
+			    	alert('文件上传成功');
 				}
 			});
 		},

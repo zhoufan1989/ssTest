@@ -117,11 +117,11 @@ public class FileManagerController extends BaseController{
 			}
 			query.with(new Sort(Direction.DESC, "addTime"));
 			List<FileDataDTO> list = fileDataService.queryAll(query, FileDataDTO.class);
-			new ExcelUtil().listToExcel(list, fieldMap, "数据测试统计表","111.xsl", response, 1);
+			new ExcelUtil().listToExcel(list, fieldMap, "数据测试统计表","111", response, 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return putData("massage", "文件上传成功");
+		return null;
 	}
 	
 }

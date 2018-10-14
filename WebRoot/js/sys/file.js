@@ -55,19 +55,24 @@ var vm = new Vue({
 			
 			location.href = "file_add.html?id="+id;
 		},
-		excelExport: function (event){
-			var url = "../file/data/fileDataExport";
-			$.ajax({
-				type: "POST",
-			    url: url,
-			    data: {
-			    	   name:vm.name
-			    }
-			    ,
-			    success: function(r){
-			    	alert('文件上传成功');
-				}
-			});
+//		excelExport: function (event){
+//			var url = "../file/data/fileDataExport";
+//			$.ajax({
+//				type: "POST",
+//			    url: url,
+//			    data: {
+//			    	   name:vm.name
+//			    }
+//			    ,
+//			    success: function(r){
+//			    	alert('文件上传成功');
+//				}
+//			});
+//		},
+		excelExport: function(){
+//			window.location.href = window.location.origin + '/file/data/fileDataExport';
+//			widow.URL.revokeObjectURL('../file/data/fileDataExport');
+			location.href = '../file/data/fileDataExport';
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

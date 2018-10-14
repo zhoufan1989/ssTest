@@ -1,11 +1,14 @@
 package com.sys.controller;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,7 @@ import com.base.controller.BaseController;
 import com.sys.dto.FileDataDTO;
 import com.sys.service.FileDataService;
 import com.util.ExcelUtil;
+import com.util.ExportPOIUtils;
 import com.util.PageUtils;
 
 /**
@@ -104,12 +108,31 @@ public class FileManagerController extends BaseController{
 	@RequestMapping("/fileDataExport")
 	@ResponseBody
 	public Object fileDataExport(HttpServletResponse response, String name) {
-		LinkedHashMap<String, String> fieldMap = new LinkedHashMap<>();
-		fieldMap.put("name", "名称");
-		fieldMap.put("age", "年龄");
-		fieldMap.put("addTime", "添加时间");
+//		LinkedHashMap<String, String> fieldMap = new LinkedHashMap<>();
+//		fieldMap.put("name", "名称");
+//		fieldMap.put("age", "年龄");
+//		fieldMap.put("addTime", "添加时间");
+//		Map<Object, Object> map = new HashMap<Object, Object>(); 
+//		try {
+//			Query query = new Query();
+//			//名称
+//			if(StringUtils.isNotBlank(name)) {
+//				query.addCriteria(Criteria.where("name").is(name));
+//			}
+//			query.with(new Sort(Direction.DESC, "addTime"));
+//			List<FileDataDTO> list = fileDataService.queryAll(query, FileDataDTO.class);
+//			new ExcelUtil().listToExcel(list, fieldMap, "数据测试统计表","111", response, 1);
+//			map = putData("massage", "文件");
+//		} catch (Exception e) {
+//			map = error("文件上传异常!");
+//			e.printStackTrace();
+//		}
+//		return map;
 		
+		String columnNames[] = {"名称","年龄","添加时间"};	//标题
+		String keys[] = {"name","age","addTime"};		//参数字段
 		try {
+			String fileName = "数据测试";
 			Query query = new Query();
 			//名称
 			if(StringUtils.isNotBlank(name)) {
@@ -117,7 +140,7 @@ public class FileManagerController extends BaseController{
 			}
 			query.with(new Sort(Direction.DESC, "addTime"));
 			List<FileDataDTO> list = fileDataService.queryAll(query, FileDataDTO.class);
-			new ExcelUtil().listToExcel(list, fieldMap, "数据测试统计表","111", response, 1);
+			ExportPOIUtils.start_download(response, fileName, list, columnNames, keys);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
